@@ -1,0 +1,12 @@
+# npm
+node_modules/
+dist/
+
+# root
+.env
+
+# testing
+sandbox.ts
+
+# logs
+logs/
