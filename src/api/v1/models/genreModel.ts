@@ -3,7 +3,5 @@
  */
 export interface Genre {
     id: string,
-    movieTitle: string,
-    description: string,
     genre: string
 };
