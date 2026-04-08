@@ -41,8 +41,8 @@ export const getRatingById = async (
 ): Promise<void> => {
     try {
         const requestedID: string = String(req.params.id) 
-        const event: Event = await ratingService.getRatingByID(requestedID);
-        res.status(HTTP_STATUS.OK).json(successResponse({event}, "Rating successfully retrived from the database."));
+        const rating: Rating = await ratingService.getRatingByID(requestedID);
+        res.status(HTTP_STATUS.OK).json(successResponse({rating}, "Rating successfully retrived from the database."));
     } catch (error: unknown) {
         res.status(HTTP_STATUS.NOT_FOUND).json({message: `Rating not found`});
         next(error);
@@ -63,7 +63,7 @@ export const getRatingByTitle = async (
 ): Promise<void> => {
     try {
         const { movieTitle } = req.query;
-        const ratings: Rating = await ratingService.getRatingByTitle(String(movieTitle));
+        const ratings: Rating[] = await ratingService.getRatingByTitle(String(movieTitle));
         res.status(HTTP_STATUS.OK).json(successResponse(ratings, "Rating/s successfully retrived from the database."));
     } catch (error: unknown) {
         res.status(HTTP_STATUS.NOT_FOUND).json({message: `Rating not found`});
@@ -108,7 +108,7 @@ export const createRating = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const eventData: Event = await ratingService.createRating(req.body);
+        const eventData: Rating = await ratingService.createRating(req.body);
         res.status(HTTP_STATUS.CREATED).json(successResponse(eventData, "Rating created"));
     } catch (error: unknown) {
         const errorMessage: Error | string =
