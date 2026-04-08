@@ -5,26 +5,26 @@ import * as ratingController from "../controllers/ratingController";
 const router = express.Router();
 
 router.get("/ratings", 
-    ratingsController.getAllRatings
+    ratingController.getAllRatings
 )
 
 router.get("/ratings/:id", 
-    ratingsController.getRatingById
+    ratingController.getRatingById
 )
 
 router.get("/ratings", 
-    ratingsController.getRatingByTitle
+    ratingController.getRatingByTitle
 )
 
 router.post("/ratings",
-    ratingsController.createRating
+    ratingController.createRating
 )
 router.put("/events/:id",
-    ratingsController.updateRating
+    ratingController.updateRating
 );
 
 router.delete("/events/:id",
-    ratingsController.deleteRating
+    ratingController.deleteRating
 );
 
 export default router;
