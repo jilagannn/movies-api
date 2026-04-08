@@ -6,9 +6,17 @@ import { AppError } from "../errors/errors";
 
 const COLLECTION = "movies";
 
-export const getAllMovies = async(): Promise<Movie[]> => {
+export const getAllMovies = async(
+    genre?: string
+): Promise<Movie[]> => {
     try {
-        const snapshot: QuerySnapshot = await firestoreRepo.getDocuments(COLLECTION);
+        let snapshot: QuerySnapshot;
+        
+        if (genre) {
+            snapshot = await firestoreRepo.getDocumentsByArrayContains(COLLECTION, "genres", genre);
+        } else {
+            snapshot = await firestoreRepo.getDocuments(COLLECTION);
+        }
         const movies: Movie[] = snapshot.docs.map(doc => {
             const data: DocumentData = doc.data();
             return {

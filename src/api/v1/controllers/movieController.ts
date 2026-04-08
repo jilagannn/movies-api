@@ -10,7 +10,8 @@ export const getAllMovies = async(
     next: NextFunction
 ): Promise<void> => {
     try {
-        const movies: Movie[] = await movieService.getAllMovies();
+        const genre: string | undefined = req.query.genre as string;
+        const movies: Movie[] = await movieService.getAllMovies(genre);
         const count: number = movies.length;
         res.status(HTTP_STATUS.OK).json(
             successResponse(movies, "Movies retrieved successfully", count)
