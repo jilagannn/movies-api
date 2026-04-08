@@ -78,15 +78,7 @@ export const updateMovie = async(
     try {
         const { id } = req.params;
         const movieId: string = (id as string);
-        const { movieTitle, description, genres, runTime, actors, director } = req.body;
-        const updatedMovieData: Partial<Pick<Movie, "movieTitle" | "description" | "genres" | "runTime" | "actors" | "director" >> ={
-            movieTitle,
-            description,
-            genres,
-            runTime,
-            actors,
-            director
-        };
+        const updatedMovieData: Partial<Pick<Movie, "movieTitle" | "description" | "genres" | "runTime" | "actors" | "director" >> = req.body;
 
         const updatedMovie: Movie = await movieService.updateMovie(movieId, updatedMovieData);
         res.status(HTTP_STATUS.OK).json(
