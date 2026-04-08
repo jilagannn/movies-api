@@ -59,11 +59,9 @@ export const updateGenre = async (
   try {
     const id = req.params.id as string;
 
-    const { movieTitle, description, genre } = req.body;
+    const { genre } = req.body;
 
     const updatedGenre: Genre = await genreService.updateGenre(id, {
-        movieTitle,
-        description,
         genre
     });
 

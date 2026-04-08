@@ -68,8 +68,6 @@ export const getGenreById = async (id: string): Promise<Genre | null> => {
 export const updateGenre = async (
   id: string,
   genreData: {
-    movieTitle?: string;
-    description?: string;
     genre?: string;
   },
 ): Promise<Genre | null> => {
