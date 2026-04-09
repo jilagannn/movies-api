@@ -26,7 +26,7 @@ export const movieSchemas = {
                 "any.required": "\"description\" is required",
                 "string.empty": "\"description\" cannot be empty",
             }),
-            genres: Joi.string().required().messages({
+            genres: Joi.array().min(1).items(Joi.string()).required().messages({
                 "any.required": "\"genres\" is required",
                 "string.empty": "\"genres\" cannot be empty",
             }),
@@ -34,7 +34,7 @@ export const movieSchemas = {
                 "any.required": "\"runTime\" is required",
                 "string.empty": "\"runTime\" cannot be empty"
             }),
-            actors: Joi.string().required().messages({
+            actors: Joi.array().min(1).items(Joi.string()).required().messages({
                 "any.required": "\"actors\" is required",
                 "string.empty": "\"actors\" cannot be empty"
             }),
@@ -60,13 +60,13 @@ export const movieSchemas = {
             description: Joi.string().optional().messages({
                 "string.empty": "\"description\" cannot be empty",
             }),
-            genres: Joi.string().optional().messages({
+            genres: Joi.array().min(1).items(Joi.string()).optional().messages({
                 "string.empty": "\"genres\" cannot be empty",
             }),
             runTime: Joi.string().optional().messages({
                 "string.empty": "\"runTime\" cannot be empty"
             }),
-            actors: Joi.string().optional().messages({
+            actors: Joi.array().min(1).items(Joi.string()).optional().messages({
                 "string.empty": "\"actors\" cannot be empty"
             }),
             director: Joi.string().optional().messages({
