@@ -78,7 +78,7 @@ export const updateGenre = async (
       ...genre,
       ...genreData
     } as Genre;
-    await firestoreRepository.updateDocument(COLLECTION, id, genreData);
+    await firestoreRepository.updateDocument(COLLECTION, id, updatedGenre);
 
     return structuredClone(updatedGenre);
   } catch (error: unknown) {
