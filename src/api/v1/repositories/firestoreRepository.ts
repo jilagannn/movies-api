@@ -199,3 +199,19 @@ export const deleteDocumentsByFieldValues = async (
         );
     };
 };
+
+export const getDocumentsByArrayContains = async (
+    collectionName: string,
+    fieldName: string,
+    fieldValue: string
+): Promise<FirebaseFirestore.QuerySnapshot> => {
+    try {
+        return await db.collection(collectionName).where(fieldName, "array-contains", fieldValue).get();
+    } catch (error: unknown) {
+        const errorMessage: string =
+            error instanceof Error ? error.message : "Unknown error";
+        throw new Error(
+            `Failed to fetch documents from ${collectionName}: ${errorMessage}`
+        );
+    };
+};
