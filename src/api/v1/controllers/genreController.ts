@@ -28,7 +28,7 @@ export const getAllGenres = async (
     const genres: Genre[] = await genreService.getAllGenres();
     res
       .status(HTTP_STATUS.OK)
-      .json(successResponse(genres, "Genres retrieved", genres.length ));
+      .json(successResponse(genres, "Genres retrieved", genres.length));
   } catch (error: unknown) {
     next(error);
   }
@@ -47,7 +47,7 @@ export const getGenreById = async (
       .status(HTTP_STATUS.OK)
       .json(successResponse(genre, "Genre successfully received"));
   } catch (error: unknown) {
-     res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Genre not found" });
+    res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Genre not found" });
   }
 };
 
@@ -62,14 +62,14 @@ export const updateGenre = async (
     const { genre } = req.body;
 
     const updatedGenre: Genre = await genreService.updateGenre(id, {
-        genre
+      genre,
     });
 
     res
       .status(HTTP_STATUS.OK)
       .json(successResponse(updatedGenre, "Genre updated successfully."));
   } catch (error: unknown) {
-     res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Genre not found" });
+    res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Genre not found" });
   }
 };
 
@@ -82,10 +82,10 @@ export const deleteGenre = async (
     const id = req.params.id as string;
 
     await genreService.deleteGenre(id);
-    res.status(HTTP_STATUS.OK).json(
-      successResponse(undefined,"Genre successfully deleted.")
-    )
-    } catch(error:unknown) {
-        res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Genre not found" });
-    }
+    res
+      .status(HTTP_STATUS.OK)
+      .json(successResponse(undefined, "Genre successfully deleted."));
+  } catch (error: unknown) {
+    res.status(HTTP_STATUS.NOT_FOUND).json({ message: "Genre not found" });
+  }
 };

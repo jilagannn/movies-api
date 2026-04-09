@@ -10,8 +10,6 @@ import { db } from "../../../../config/firebaseConfig";
 const COLLECTION: string = "genres";
 
 export const createGenre = async (genreData: {
-  movieTitle: string;
-  description: string;
   genre: string;
 }): Promise<Genre> => {
   const newGenre: Partial<Genre> = {
@@ -46,20 +44,21 @@ export const getAllGenres = async (): Promise<Genre[]> => {
   }
 };
 
-export const getGenreById = async (id: string): Promise<Genre | null> => {
+export const getGenreById = async (id: string): Promise<Genre> => {
   try {
-    const doc: DocumentSnapshot = await firestoreRepository.getDocumentById(
+    const doc: DocumentSnapshot | null = await firestoreRepository.getDocumentById(
       COLLECTION,
       id,
     );
-    if (!doc.exists) {
-      return null;
+    if (!doc) {
+      throw new Error("Genre not found");
     }
     const data: DocumentData = doc.data()!;
-    return {
+    const genre: Genre = {
       id: doc.id,
       ...data,
     } as Genre;
+    return structuredClone(genre);
   } catch (error: unknown) {
     throw error;
   }
@@ -68,25 +67,20 @@ export const getGenreById = async (id: string): Promise<Genre | null> => {
 export const updateGenre = async (
   id: string,
   genreData: {
-    genre?: string;
+    genre: string;
   },
-): Promise<Genre | null> => {
+): Promise<Genre> => {
   try {
-    const doc: DocumentSnapshot = await firestoreRepository.getDocumentById(
-      COLLECTION,
-      id,
-    );
-    if (!doc.exists) {
-      return null;
-    }
-    const data: DocumentData = doc.data()!;
+    const genre: Genre = await getGenreById(id);
+
+
     const updatedGenre: Genre = {
-      id: doc.id,
-      ...data,
-      ...genreData,
+      ...genre,
+      ...genreData
     } as Genre;
     await firestoreRepository.updateDocument(COLLECTION, id, genreData);
-    return updatedGenre;
+
+    return structuredClone(updatedGenre);
   } catch (error: unknown) {
     throw error;
   }
@@ -94,12 +88,12 @@ export const updateGenre = async (
 
 export const deleteGenre = async (id: string): Promise<boolean> => {
   try {
-    const doc: DocumentSnapshot = await firestoreRepository.getDocumentById(
+    const doc: DocumentSnapshot | null = await firestoreRepository.getDocumentById(
       COLLECTION,
       id,
     );
-    if (!doc.exists) {
-      return false;
+    if (!doc) {
+     throw new Error ("Genre not found")
     }
     await firestoreRepository.deleteDocument(COLLECTION, id);
     return true;
