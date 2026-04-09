@@ -23,7 +23,7 @@ import Joi from "joi";
  *         movieTitle:
  *           type: string
  *           description: The title of the movie.
- *           example: Spiderman: Into The Spiderverse
+ *           example: "Spiderman: Into The Spiderverse"
  *         description:
  *           type: string
  *           description: A quick synopsis describing what happens in the movie.
@@ -37,7 +37,7 @@ import Joi from "joi";
  *         runTime:
  *           type: string
  *           description: The total run time or duration of the movie.
- *           example: "1h 57m"
+ *           example: 1h 57m
  *         actors:
  *           type: array
  *           items:
@@ -78,24 +78,26 @@ import Joi from "joi";
  *         movieTitle:
  *           type: string
  *           description: The title of the movie.
- *           example: Spiderman: Into The Spiderverse
+ *           example: "Spiderman: Into The Spiderverse"
  *         description:
  *           type: string
  *           description: A quick synopsis describing what happens in the movie.
  *           example: Struggling to find his place in the world while juggling school and family, Brooklyn teenager Miles Morales is unexpectedly bitten by a radioactive spider and develops unfathomable powers just like the one and only Spider-Man. While wrestling with the implications of his new abilities, Miles discovers a super collider created by the madman Wilson "Kingpin" Fisk, causing others from across the Spider-Verse to be inadvertently transported to his dimension.
  *         genres:
- *           type: string
+ *           type: array
+ *           items:
+ *             type: string
  *           description: The genre types for the movie.
- *           enum: []
  *           example: ["Animation", "Action", "Adventure", "Science-Fiction"]
  *         runTime:
  *           type: string
  *           description: The total run time or duration of the movie.
- *           example: "1h 57m"
+ *           example: 1h 57m
  *         actors:
- *           type: string
+ *           type: array
+ *           items:
+ *             type: string
  *           description: The associated actors that took roles for the movie.
- *           enum: []
  *           example: ["Shameik Moore", "Jake Johnson", "Hailee Steinfeld"]
  *         director:
  *           type: string

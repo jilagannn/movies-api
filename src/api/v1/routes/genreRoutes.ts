@@ -1,6 +1,6 @@
 import express from "express";
 import * as genreService from ".././controllers/genreController";
-import { genreSchema } from "../validation/genreSchema";
+import { genreSchema } from "../validations/genreSchema";
 import { validateRequest } from "../middleware/validate";
 
 const router = express.Router();
