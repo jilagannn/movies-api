@@ -12,14 +12,14 @@ export const getRatingByID = async(id: string): Promise<Rating> => {
     try {
         const ratingData: FirebaseFirestore.DocumentSnapshot | null = await firestoreRepository.getDocumentById(COLLECTION, id);
         if (ratingData === null){
-            throw new Error(`Rating ${id} not found`);
+            throw new Error(`Rating not found`);
         }
         return ratingData.data() as Rating
     } catch (error: unknown) {
         const errorMessage =
             error instanceof Error ? error.message : "Unknown error";
         throw new Error(
-            `Failed to get rating ${id}: ${errorMessage}`
+            `Failed to get rating: ${errorMessage}`
         );
     }
 };
