@@ -1,0 +1,17 @@
+jest.mock("../config/firebaseConfig", () => ({
+    db: {
+        collection: jest.fn(),
+        doc: jest.fn(),
+    },
+    auth: {
+        verifyIdToken: jest.fn(),
+    },
+}));
+
+afterEach(() => {
+    jest.clearAllMocks();
+})
+
+afterAll(() => {
+    jest.resetModules();
+})
