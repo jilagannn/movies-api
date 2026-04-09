@@ -1,6 +1,7 @@
 import express, { Express } from "express";
 import morgan from "morgan";
 import healthRoutes from "../src/api/v1/routes/healthRoutes";
+import setupSwagger from "../config/swagger";
 
 // start express
 const app: Express = express();
@@ -18,5 +19,7 @@ app.get("/", (req, res) => {
 
 // health route
 app.use("/api/v1/health", healthRoutes);
+
+setupSwagger(app);
 
 export default app;
