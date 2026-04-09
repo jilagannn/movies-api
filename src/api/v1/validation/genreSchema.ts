@@ -1,5 +1,35 @@
 import Joi from "joi";
 
+/**
+ * @openapi
+ * components:
+ *   schemas:
+ *     Genre:
+ *       type: object
+ *       properties:
+ *         id:
+ *           type: string
+ *           example: "1"
+ *         genre:
+ *           type: string
+ *           example: Action
+ *
+ *     CreateGenreRequest:
+ *       type: object
+ *       required: [genre]
+ *       properties:
+ *         genre:
+ *           type: string
+ *           example: Action
+ *
+ *     UpdateGenreRequest:
+ *       type: object
+ *       properties:
+ *         genre:
+ *           type: string
+ *           example: Horror
+ */
+
 export const genreSchema = {
   // POST /genre - Create new genre
   create: {
