@@ -28,13 +28,13 @@ app.get("/", (req, res) => {
 app.use("/api/v1/health", healthRoutes);
 
 // Movies
-app.use("api/v1/health", movieRoutes);
+app.use("/api/v1/movies", movieRoutes);
 
 // Genres
-app.use("api/v1/health", genreRoutes);
+app.use("/api/v1/genres", genreRoutes);
 
-// Rating
-app.use("api/v1/health", ratingRoutes);
+// Ratings
+app.use("/api/v1/ratings", ratingRoutes);
 
 setupSwagger(app);
 
