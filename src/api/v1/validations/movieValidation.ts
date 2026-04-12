@@ -209,6 +209,8 @@ export const movieSchemas = {
             director: Joi.string().optional().messages({
                 "string.empty": "\"director\" cannot be empty"
             })
+        }).min(1).messages({
+            "object.min": "\"body\" must contain one field or property for updating a movie"
         })
     },
 
