@@ -1,6 +1,14 @@
 import express, { Express } from "express";
+import dotenv from "dotenv";
+
+dotenv.config();
+
 import morgan from "morgan";
 import healthRoutes from "../src/api/v1/routes/healthRoutes";
+import setupSwagger from "../config/swagger";
+import movieRoutes from "../src/api/v1/routes/movieRoutes";
+import genreRoutes from "../src/api/v1/routes/genreRoutes";
+import ratingRoutes from "../src/api/v1/routes/healthRoutes"
 
 // start express
 const app: Express = express();
@@ -18,5 +26,16 @@ app.get("/", (req, res) => {
 
 // health route
 app.use("/api/v1/health", healthRoutes);
+
+// Movies
+app.use("/api/v1/movies", movieRoutes);
+
+// Genres
+app.use("/api/v1/genres", genreRoutes);
+
+// Ratings
+app.use("/api/v1/ratings", ratingRoutes);
+
+setupSwagger(app);
 
 export default app;

@@ -1,0 +1,889 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Movies API Documentation",
+    "version": "1.0.0",
+    "description": "This is the API documentation for the Movies API application."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1",
+      "description": "Local server"
+    }
+  ],
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "schemas": {
+      "Genre": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": "1"
+          },
+          "genre": {
+            "type": "string",
+            "example": "Action"
+          }
+        }
+      },
+      "CreateGenreRequest": {
+        "type": "object",
+        "required": [
+          "genre"
+        ],
+        "properties": {
+          "genre": {
+            "type": "string",
+            "example": "Action"
+          }
+        }
+      },
+      "UpdateGenreRequest": {
+        "type": "object",
+        "properties": {
+          "genre": {
+            "type": "string",
+            "example": "Horror"
+          }
+        }
+      },
+      "Movies": {
+        "type": "object",
+        "required": [
+          "id",
+          "movieTitle",
+          "description",
+          "genres",
+          "runTime",
+          "actors",
+          "director"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The movie id.",
+            "example": "r6wj4Sl8a3cHkfc9MUrk"
+          },
+          "movieTitle": {
+            "type": "string",
+            "description": "The title of the movie.",
+            "example": "Spiderman: Into The Spiderverse"
+          },
+          "description": {
+            "type": "string",
+            "description": "A quick synopsis describing what happens in the movie.",
+            "example": "Struggling to find his place in the world while juggling school and family, Brooklyn teenager Miles Morales is unexpectedly bitten by a radioactive spider and develops unfathomable powers just like the one and only Spider-Man. While wrestling with the implications of his new abilities, Miles discovers a super collider created by the madman Wilson \"Kingpin\" Fisk, causing others from across the Spider-Verse to be inadvertently transported to his dimension."
+          },
+          "genres": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The genre types for the movie.",
+            "example": [
+              "Animation",
+              "Action",
+              "Adventure",
+              "Science-Fiction"
+            ]
+          },
+          "runTime": {
+            "type": "string",
+            "description": "The total run time or duration of the movie.",
+            "example": "1h 57m"
+          },
+          "actors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The associated actors that took roles for the movie.",
+            "example": [
+              "Shameik Moore",
+              "Jake Johnson",
+              "Hailee Steinfeld"
+            ]
+          },
+          "director": {
+            "type": "string",
+            "description": "The main director of the movie.",
+            "example": "Bob Persichetti"
+          }
+        }
+      },
+      "ValidationError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message.",
+            "example": "Validation error: \\\"movieTitle\\\" must be a string"
+          }
+        }
+      },
+      "NotFoundError": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The error message.",
+            "example": "Movie not found"
+          }
+        }
+      },
+      "CreateMovie": {
+        "type": "object",
+        "required": [
+          "movieTitle",
+          "description",
+          "genres",
+          "runtime",
+          "actors",
+          "director"
+        ],
+        "properties": {
+          "movieTitle": {
+            "type": "string",
+            "description": "The title of the movie.",
+            "example": "Spiderman: Into The Spiderverse"
+          },
+          "description": {
+            "type": "string",
+            "description": "A quick synopsis describing what happens in the movie.",
+            "example": "Struggling to find his place in the world while juggling school and family, Brooklyn teenager Miles Morales is unexpectedly bitten by a radioactive spider and develops unfathomable powers just like the one and only Spider-Man. While wrestling with the implications of his new abilities, Miles discovers a super collider created by the madman Wilson \"Kingpin\" Fisk, causing others from across the Spider-Verse to be inadvertently transported to his dimension."
+          },
+          "genres": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The genre types for the movie.",
+            "example": [
+              "Animation",
+              "Action",
+              "Adventure",
+              "Science-Fiction"
+            ]
+          },
+          "runTime": {
+            "type": "string",
+            "description": "The total run time or duration of the movie.",
+            "example": "1h 57m"
+          },
+          "actors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The associated actors that took roles for the movie.",
+            "example": [
+              "Shameik Moore",
+              "Jake Johnson",
+              "Hailee Steinfeld"
+            ]
+          },
+          "director": {
+            "type": "string",
+            "description": "The main director of the movie.",
+            "example": "Bob Persichetti"
+          }
+        }
+      },
+      "Rating": {
+        "type": "object",
+        "required": [
+          "movieTitle",
+          "rating",
+          "review"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "description": "The rating ID",
+            "example": 12232
+          },
+          "movieTitle": {
+            "type": "string",
+            "description": "The movie name",
+            "example": "Interstellar"
+          },
+          "rating": {
+            "type": "number",
+            "description": "The numeric value for a rating for the movie",
+            "example": 6
+          },
+          "review": {
+            "type": "string",
+            "description": "The written review for the movie",
+            "example": "This movie is good."
+          },
+          "createdAt": {
+            "type": "string",
+            "description": "The date the rating was registered in the system",
+            "example": "2027-10-05T14:48:00.000Z"
+          },
+          "updatedAt": {
+            "type": "string",
+            "description": "The date the rating was updated while its in the system",
+            "example": "2027-11-05T14:48:00.000Z"
+          }
+        }
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/api/v1/genres": {
+      "post": {
+        "summary": "Create a new genre",
+        "tags": [
+          "Genres"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "genre"
+                ],
+                "properties": {
+                  "genre": {
+                    "type": "string",
+                    "example": "Action"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Genre created successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get all genres",
+        "tags": [
+          "Genres"
+        ],
+        "responses": {
+          "200": {
+            "description": "Genres retrieved successfully"
+          }
+        }
+      }
+    },
+    "/api/v1/genres/{id}": {
+      "get": {
+        "summary": "Get a genre by ID",
+        "tags": [
+          "Genres"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Genre successfully received"
+          },
+          "404": {
+            "description": "Genre not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update a genre by ID",
+        "tags": [
+          "Genres"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "genre": {
+                    "type": "string",
+                    "example": "Horror"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Genre updated successfully."
+          },
+          "404": {
+            "description": "Genre not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete a genre by ID",
+        "tags": [
+          "Genres"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Genre successfully deleted."
+          },
+          "404": {
+            "description": "Genre not found"
+          }
+        }
+      }
+    },
+    "/movies": {
+      "get": {
+        "summary": "Get all movies",
+        "tags": [
+          "Movies"
+        ],
+        "responses": {
+          "200": {
+            "description": "An array of movies.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "Movies retrieved successfully"
+                    },
+                    "count": {
+                      "type": "integer",
+                      "example": 3
+                    },
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Movies"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Create an movie",
+        "tags": [
+          "movies"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMovie"
+              }
+            }
+          },
+          "description": "The request body properties needed to create an movie."
+        },
+        "responses": {
+          "201": {
+            "description": "Created movie successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "movie created"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Movies"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "summary": "Get an movie by id",
+        "tags": [
+          "Movies"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the movie."
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "An single movie.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "movie retrieved"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Movies"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "movie not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an movie",
+        "tags": [
+          "movies"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the movie."
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/CreateMovie"
+              }
+            }
+          },
+          "description": "The request body properties needed to update an movie."
+        },
+        "responses": {
+          "200": {
+            "description": "Updated movie successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "movie updated"
+                    },
+                    "data": {
+                      "$ref": "#/components/schemas/Movies"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ValidationError"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "movie not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deletes a movie by id",
+        "tags": [
+          "movies"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the movie."
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Deleting a single movie",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "message": {
+                      "type": "string",
+                      "example": "movie successfully deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "movie not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotFoundError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/ratings": {
+      "get": {
+        "summary": "Retrieve all ratings",
+        "tags": [
+          "Ratings"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved all ratings",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/Rating"
+                      }
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Successfully retrieved all ratings"
+                    },
+                    "count": {
+                      "type": "number",
+                      "example": 12
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Failed to get all ratings"
+          }
+        }
+      }
+    },
+    "/rating/{id}": {
+      "get": {
+        "summary": "Retrieve a single rating",
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "The id of the rating",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved rating",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Rating"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Rating successfully retrived from the database."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Rating not found"
+          }
+        }
+      },
+      "put": {
+        "summary": "Update an rating's information",
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the item"
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Rating"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Rating updated successfully",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Rating"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Rating not found"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete an rating by ID",
+        "tags": [
+          "Rating"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "description": "The unique identifier of the item"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Rating deleted successfully"
+          },
+          "404": {
+            "description": "Rating not found"
+          }
+        }
+      }
+    },
+    "/ratings?title=movieTitle": {
+      "get": {
+        "summary": "Retrieve an array of ratings with the title given",
+        "tags": [
+          "Rating"
+        ],
+        "queries": [
+          {
+            "name": "title",
+            "in": "path",
+            "description": "The title of the movie",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successfully retrieved rating",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Rating"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Rating successfully retrived from the database."
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Rating not found"
+          }
+        }
+      }
+    },
+    "/rating": {
+      "post": {
+        "summary": "Create a new rating",
+        "tags": [
+          "Rating"
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "required": [
+                  "movieTitle",
+                  "rating",
+                  "review"
+                ],
+                "properties": {
+                  "movieTitle": {
+                    "type": "string",
+                    "example": "Summer Movie"
+                  },
+                  "rating": {
+                    "type": "number",
+                    "maximum": 10,
+                    "example": 7
+                  },
+                  "review": {
+                    "type": "string",
+                    "example": 90
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Rating created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "data": {
+                      "$ref": "#/components/schemas/Rating"
+                    },
+                    "message": {
+                      "type": "string",
+                      "example": "Rating created"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid input data"
+          },
+          "404": {
+            "description": "Failed to create Rating: Info"
+          }
+        }
+      }
+    }
+  },
+  "tags": []
+}
