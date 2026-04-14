@@ -37,7 +37,6 @@ const getTMDBData = async (
 
 getTMDBData("/movie/popular?language=en-US");
 
-// then this 2nd
 const clearCollection = async(collectionName: string): Promise<void> => {
     console.log(`Clearing ${collectionName} collection...`);
     const snapshot = await db.collection(collectionName).get();
@@ -61,3 +60,18 @@ const clearCollection = async(collectionName: string): Promise<void> => {
 };
 
 clearCollection(COLLECTION)
+
+//then we commit this
+/**
+ * Represents the needed properties for pulling movie details + credits from each movie in popular movies
+ */
+interface TMDBMovieDetails {
+    title: string;
+    overview: string;
+    runtime: number;
+    genres: {name: string}[];
+    credits: {
+        cast: { name: string;}[];
+        crew: { name: string; job: string }[];
+    };
+};
