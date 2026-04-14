@@ -1,3 +1,6 @@
+import { db } from "../config/firebaseConfig";
+
+const COLLECTION: string = "movies";
 const TMBD_URL: string = "https://api.themoviedb.org/3"
 const TMDB_ACCESS_TOKEN = process.env.TMDB_ACCESS_TOKEN;
 const AUTHORIZATION_HEADER = `Bearer ${TMDB_ACCESS_TOKEN}`;
@@ -33,3 +36,28 @@ const getTMDBData = async (
 };
 
 getTMDBData("/movie/popular?language=en-US");
+
+// then this 2nd
+const clearCollection = async(collectionName: string): Promise<void> => {
+    console.log(`Clearing ${collectionName} collection...`);
+    const snapshot = await db.collection(collectionName).get();
+    const batch = db.batch();
+
+    const count = await db.collection(collectionName).count().get();
+
+    if (count.data().count === 0 ) {
+        console.log("Collection is empty");
+
+    } else{
+        snapshot.docs.forEach(doc => {
+            batch.delete(doc.ref);
+        });
+
+        if (snapshot.docs.length > 0) {
+            await batch.commit();
+            console.log(`Cleared ${snapshot.docs.length} documents from ${collectionName}`);
+        };
+    };
+};
+
+clearCollection(COLLECTION)
