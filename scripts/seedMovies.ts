@@ -31,7 +31,6 @@ const getTMDBData = async (
     const data: object = await response.json()
     console.log("SUCCESS -- Data pulled successfully from TMDB API")
 
-    console.log(data)
     return data;
 };
 
@@ -127,4 +126,9 @@ const seedMovie = async (): Promise<void> => {
     console.log("SUCCESS -- Movie data pulled and written to collection");
 };
 
-seedMovie();
+const startSeed = async(): Promise<void> => {
+    clearCollection(COLLECTION);
+    seedMovie();
+};
+
+startSeed();
