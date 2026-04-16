@@ -10,3 +10,6 @@ sandbox.ts
 
 # logs
 logs/
+
+# macOS
+.DS_STORE
