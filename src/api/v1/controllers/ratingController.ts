@@ -44,7 +44,7 @@ export const getRatingById = async (
         const rating: Rating = await ratingService.getRatingByID(requestedID);
         res.status(HTTP_STATUS.OK).json(successResponse({rating}, "Rating successfully retrived from the database."));
     } catch (error: unknown) {
-        res.status(HTTP_STATUS.NOT_FOUND).json({message: `Rating not found`});
+        res.status(HTTP_STATUS.NOT_FOUND).json({message: `Rating not found a`});
         next(error);
     }
 };
@@ -62,11 +62,12 @@ export const getRatingByTitle = async (
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { movieTitle } = req.query;
-        const ratings: Rating[] = await ratingService.getRatingByTitle(String(movieTitle));
+        const { title } = req.query;
+        //console.log("searching for: ", title)
+        const ratings: Rating[] = await ratingService.getRatingByTitle(String(title));
         res.status(HTTP_STATUS.OK).json(successResponse(ratings, "Rating successfully retrived from the database."));
     } catch (error: unknown) {
-        res.status(HTTP_STATUS.NOT_FOUND).json({message: `Rating not found`});
+        res.status(HTTP_STATUS.NOT_FOUND).json({message: `Rating not found by title`});
         next(error);
     }
 };
@@ -85,8 +86,8 @@ export const updateRating = async (
 ): Promise<void> => {
     try {
         const requestedID: string = String(req.params.id) 
-        await ratingService.updateRating(requestedID, req.body);
-        res.status(HTTP_STATUS.OK).json(successResponse({}, `Rating with id ${requestedID} updated`));
+        const updatedData = await ratingService.updateRating(requestedID, req.body);
+        res.status(HTTP_STATUS.OK).json(successResponse({updatedData}, `Rating with id ${requestedID} updated`));
     } catch (error: unknown) {
         const errorMessage: Error | string =
             error instanceof Error ? error.message : "Unknown error";
@@ -133,7 +134,7 @@ export const deleteRating = async (
     try {
         const requestedID: string = String(req.params.id) 
         await ratingService.deleteRating(requestedID);
-        res.status(HTTP_STATUS.OK).json(successResponse({}, "Rating successfully deleted from the database."));
+        res.status(HTTP_STATUS.OK).json({message:"Rating successfully deleted from the database."});
     } catch (error: unknown) {
         const errorMessage: Error | string =
             error instanceof Error ? error.message : "Unknown error";
