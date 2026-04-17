@@ -35,7 +35,10 @@ export const getRatingByTitle  = async(title: string): Promise<Rating[]> => {
         const ratings: FirebaseFirestore.QuerySnapshot = await firestoreRepository.getDocuments(COLLECTION);
 
         for (let e of ratings.docs) {
-            if (e.data().movieTitle == title){
+            const currentTitle: string = e.data().movieTitle
+            const lowerTitle: string = currentTitle.toLowerCase()
+            //console.log("current item to compare: ", lowerTitle)
+            if (lowerTitle.includes(title.toLowerCase()) ){
                 ratingData.push(e.data() as Rating)  
             }
         }
@@ -84,19 +87,15 @@ export const createRating = async(ratingData: {
     movieTitle: string,
     rating: number,
     review: string,
-    createdAt?: string,
-    updatedAt?: string
 }): Promise<Rating> => {
     try {
-        const newRating: {
-            movieTitle: string,
-            rating: number,
-            review: string,
-            createdAt?: string,
-            updatedAt?: string
-        } = {
-            ...ratingData
-        };
+        const newRating = {
+            movieTitle: ratingData.movieTitle,
+            rating: ratingData.rating,
+            review: ratingData.review,
+            createdAt: new Date().toISOString(),
+            updatedAt: new Date().toISOString()
+        }
 
         const id: string = await firestoreRepository.createDocument<Rating>(COLLECTION, newRating);
         return { id, ...newRating } as Rating;
@@ -121,7 +120,7 @@ export const updateRating = async (
         rating: number,
         review: string
         updatedAt?: string
-    }): Promise<void> => {
+    }): Promise<Rating> => {
 
     try {
 
@@ -131,6 +130,9 @@ export const updateRating = async (
             id,
             ratingData
         );
+
+        const updatedData: FirebaseFirestore.DocumentSnapshot | null = await firestoreRepository.getDocumentById(COLLECTION, id);
+        return structuredClone(updatedData?.data() as Rating)
     } catch (error: unknown) {
         throw new Error(
             `Failed to update post ${id}: Rating with id ${id} not found`

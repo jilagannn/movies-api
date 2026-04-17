@@ -20,7 +20,7 @@ interface ApiResponse<T> {
  * @returns
  */
 export const successResponse = <T>(
-    data: T,
+    data?: T,
     message?: string,
     count?: number
 ): ApiResponse<T> => ({
