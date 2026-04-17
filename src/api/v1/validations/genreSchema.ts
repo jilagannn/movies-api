@@ -60,7 +60,7 @@ export const genreSchema = {
     }),
     body: Joi.object({
       genre: Joi.string().optional().messages({
-        "string.empty": "Content cannot be empty",
+        "string.empty": "Genre cannot be empty",
       }),
     }),
   },
