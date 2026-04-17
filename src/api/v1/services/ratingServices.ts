@@ -36,7 +36,7 @@ export const getRatingByTitle  = async(title: string): Promise<Rating[]> => {
 
         for (let e of ratings.docs) {
             const currentTitle: string = e.data().movieTitle
-            let lowerTitle: string = currentTitle.toLowerCase()
+            const lowerTitle: string = currentTitle.toLowerCase()
             //console.log("current item to compare: ", lowerTitle)
             if (lowerTitle.includes(title.toLowerCase()) ){
                 ratingData.push(e.data() as Rating)  
