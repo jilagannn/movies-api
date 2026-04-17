@@ -34,7 +34,7 @@ app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/genres", genreRoutes);
 
 // Ratings
-app.use("api/v1/", ratingRoutes);
+app.use("/api/v1", ratingRoutes);
 
 setupSwagger(app);
 

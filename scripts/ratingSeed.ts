@@ -1,4 +1,4 @@
-import { db } from "../../../../config/firebaseConfig";
+import { db } from "../config/firebaseConfig";
 
 const COLLECTION: string = "ratings";
 const TMBD_URL: string = "https://api.themoviedb.org/3"
@@ -94,6 +94,7 @@ const seedRatings = async (): Promise<void> => {
             const { content, author_details } = review as TMDBRatingDetails;
             const docRef = ratingsCollection.doc(String(review.id))
             const ratingDoc = {
+                id: review.id,
                 movieTitle: movie.title,
                 rating: author_details.rating || 0,
                 review: content,
