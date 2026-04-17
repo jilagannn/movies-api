@@ -64,7 +64,7 @@ router.get("/ratings",
  *       '404':
  *         description: Rating not found
  */
-router.get("/ratings/:id", 
+router.get("/ratings/searchID/:id", 
     ratingController.getRatingById
 )
 
@@ -96,7 +96,7 @@ router.get("/ratings/:id",
  *       '404':
  *         description: Rating not found
  */
-router.get("/ratings", 
+router.get("/ratings/searchTitle", 
     ratingController.getRatingByTitle
 )
 
