@@ -54,7 +54,7 @@ const seedGenre = async (): Promise<void> => {
   for (const genre of genres) {
     const docRef = genreCollection.doc(String(genre.id));
     batch.set(docRef, {
-      genres: genre.name,
+      genre: genre.name,
     });
   }
 
