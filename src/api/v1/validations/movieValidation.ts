@@ -65,13 +65,45 @@ import Joi from "joi";
  *           description: The error message.
  *           example: 'Movie not found'
  * 
+ *     UpdateMovie:
+ *       type: object
+ *       properties:
+ *         movieTitle:
+ *           type: string
+ *           description: The title of the movie.
+ *           example: "Spiderman: Into The Spiderverse"
+ *         description:
+ *           type: string
+ *           description: A quick synopsis describing what happens in the movie.
+ *           example: Struggling to find his place in the world while juggling school and family, Brooklyn teenager Miles Morales is unexpectedly bitten by a radioactive spider and develops unfathomable powers just like the one and only Spider-Man. While wrestling with the implications of his new abilities, Miles discovers a super collider created by the madman Wilson "Kingpin" Fisk, causing others from across the Spider-Verse to be inadvertently transported to his dimension.
+ *         genres:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: The genre types for the movie.
+ *           example: ["Animation", "Action", "Adventure", "Science-Fiction"]
+ *         runTime:
+ *           type: string
+ *           description: The total run time or duration of the movie.
+ *           example: 1h 57m
+ *         actors:
+ *           type: array
+ *           items:
+ *             type: string
+ *           description: The associated actors that took roles for the movie.
+ *           example: ["Shameik Moore", "Jake Johnson", "Hailee Steinfeld"]
+ *         director:
+ *           type: string
+ *           description: The main director of the movie.
+ *           example: Bob Persichetti
+ * 
  *     CreateMovie:
  *       type: object
  *       required:
  *         - movieTitle
  *         - description
  *         - genres
- *         - runtime
+ *         - runTime
  *         - actors
  *         - director
  *       properties:
@@ -177,6 +209,8 @@ export const movieSchemas = {
             director: Joi.string().optional().messages({
                 "string.empty": "\"director\" cannot be empty"
             })
+        }).min(1).messages({
+            "object.min": "\"body\" must contain one field or property for updating a movie"
         })
     },
 

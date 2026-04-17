@@ -5,7 +5,8 @@ dist/
 # root
 .env
 
-# testing
+# test
+coverage/
 sandbox.ts
 
 # logs
