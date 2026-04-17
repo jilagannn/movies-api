@@ -35,7 +35,7 @@ export const getRatingByTitle  = async(title: string): Promise<Rating[]> => {
         const ratings: FirebaseFirestore.QuerySnapshot = await firestoreRepository.getDocuments(COLLECTION);
 
         for (let e of ratings.docs) {
-            let currentTitle: string = e.data().movieTitle
+            const currentTitle: string = e.data().movieTitle
             let lowerTitle: string = currentTitle.toLowerCase()
             //console.log("current item to compare: ", lowerTitle)
             if (lowerTitle.includes(title.toLowerCase()) ){
