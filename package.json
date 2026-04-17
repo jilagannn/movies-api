@@ -12,7 +12,8 @@
     "test:coverage": "jest --coverage",
     "build": "tsc",
     "start": "ts-node src/server.ts",
-    "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html"
+    "generate-docs": "ts-node scripts/generate-openapi.ts && npx @redocly/cli build-docs openapi.json --output docs/index.html",
+    "vercel-build": "echo hello vercel"
   },
   "repository": {
     "type": "git",

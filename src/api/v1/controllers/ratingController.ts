@@ -64,7 +64,7 @@ export const getRatingByTitle = async (
     try {
         const { movieTitle } = req.query;
         const ratings: Rating[] = await ratingService.getRatingByTitle(String(movieTitle));
-        res.status(HTTP_STATUS.OK).json(successResponse(ratings, "Rating/s successfully retrived from the database."));
+        res.status(HTTP_STATUS.OK).json(successResponse(ratings, "Rating successfully retrived from the database."));
     } catch (error: unknown) {
         res.status(HTTP_STATUS.NOT_FOUND).json({message: `Rating not found`});
         next(error);

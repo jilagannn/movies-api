@@ -9,8 +9,16 @@ const router: Router = express.Router();
  * @openapi
  * /movies:
  *   get:
- *     summary: Get all movies
+ *     summary: Gets all movies in general or under a specific movie genre
  *     tags: [Movies]
+ *     parameters:
+ *       - in: query
+ *         name: genre
+ *         schema:
+ *           type: string
+ *         required: false
+ *         description: Filter movies by genre name.
+ *         example: Thriller
  *     responses:
  *       '200':
  *         description: An array of movies.
@@ -39,7 +47,7 @@ router.get(
  * @openapi
  * /movies/{id}:
  *   get:
- *     summary: Get an movie by id
+ *     summary: Gets a movie by id
  *     tags: [Movies]
  *     parameters:
  *       - in: path
@@ -50,7 +58,7 @@ router.get(
  *         description: The unique identifier of the movie.
  *     responses:
  *       '200':
- *         description: An single movie.
+ *         description: The JSON information of a single movie.
  *         content:
  *           application/json:
  *             schema:
@@ -58,11 +66,11 @@ router.get(
  *               properties:
  *                 message:
  *                   type: string
- *                   example: 'movie retrieved'
+ *                   example: 'Movie retrieved successfully'
  *                 data:
  *                   $ref: '#/components/schemas/Movies'
  *       '404':
- *         description: movie not found
+ *         description: Movie missing or not found.
  *         content:
  *           application/json:
  *             schema:
@@ -78,18 +86,18 @@ router.get(
  * @openapi
  * /movies:
  *   post:
- *     summary: Create an movie
- *     tags: [movies]
+ *     summary: Create a movie
+ *     tags: [Movies]
  *     requestBody:
  *         required: true
  *         content:
  *           application/json: 
  *             schema:
  *               $ref: '#/components/schemas/CreateMovie'
- *         description: The request body properties needed to create an movie.
+ *         description: The request body properties needed to create a movie.
  *     responses:
  *       '201':
- *         description: Created movie successfully
+ *         description: Creating a movie successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -97,11 +105,11 @@ router.get(
  *               properties:
  *                 message:
  *                   type: string
- *                   example: 'movie created'
+ *                   example: 'Movie created successfully'
  *                 data:
- *                   $ref: '#/components/schemas/Movies'
+ *                   $ref: '#/components/schemas/CreateMovie'
  *       '400':
- *         description: Invalid input data
+ *         description: Invalid input data when creating a movie.
  *         content:
  *           application/json:
  *             schema:
@@ -117,8 +125,8 @@ router.post(
  * @openapi
  * /movies/{id}:
  *   put:
- *     summary: Update an movie
- *     tags: [movies]
+ *     summary: Update a movie by id
+ *     tags: [Movies]
  *     parameters:
  *       - in: path
  *         name: id
@@ -132,10 +140,10 @@ router.post(
  *           application/json: 
  *             schema:
  *               $ref: '#/components/schemas/CreateMovie'
- *         description: The request body properties needed to update an movie.
+ *         description: The request body properties needed to update a movie.
  *     responses:
  *       '200':
- *         description: Updated movie successfully
+ *         description: Updating a movie successfully.
  *         content:
  *           application/json:
  *             schema:
@@ -143,9 +151,9 @@ router.post(
  *               properties:
  *                 message:
  *                   type: string
- *                   example: 'movie updated'
+ *                   example: 'Movie updated successfully'
  *                 data:
- *                   $ref: '#/components/schemas/Movies'
+ *                   $ref: '#/components/schemas/UpdateMovie'
  *       '400':
  *         description: Invalid input data
  *         content:
@@ -169,8 +177,8 @@ router.put(
  * @openapi
  * /movies/{id}:
  *   delete:
- *     summary: Deletes a movie by id
- *     tags: [movies]
+ *     summary: Delete a movie by id
+ *     tags: [Movies]
  *     parameters:
  *       - in: path
  *         name: id
@@ -190,7 +198,7 @@ router.put(
  *                   type: string
  *                   example: 'movie successfully deleted'
  *       '404':
- *         description: movie not found
+ *         description: Movie missing or not found.
  *         content:
  *           application/json:
  *             schema:

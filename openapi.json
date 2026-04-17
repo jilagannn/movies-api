@@ -138,13 +138,63 @@
           }
         }
       },
+      "UpdateMovie": {
+        "type": "object",
+        "properties": {
+          "movieTitle": {
+            "type": "string",
+            "description": "The title of the movie.",
+            "example": "Spiderman: Into The Spiderverse"
+          },
+          "description": {
+            "type": "string",
+            "description": "A quick synopsis describing what happens in the movie.",
+            "example": "Struggling to find his place in the world while juggling school and family, Brooklyn teenager Miles Morales is unexpectedly bitten by a radioactive spider and develops unfathomable powers just like the one and only Spider-Man. While wrestling with the implications of his new abilities, Miles discovers a super collider created by the madman Wilson \"Kingpin\" Fisk, causing others from across the Spider-Verse to be inadvertently transported to his dimension."
+          },
+          "genres": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The genre types for the movie.",
+            "example": [
+              "Animation",
+              "Action",
+              "Adventure",
+              "Science-Fiction"
+            ]
+          },
+          "runTime": {
+            "type": "string",
+            "description": "The total run time or duration of the movie.",
+            "example": "1h 57m"
+          },
+          "actors": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "description": "The associated actors that took roles for the movie.",
+            "example": [
+              "Shameik Moore",
+              "Jake Johnson",
+              "Hailee Steinfeld"
+            ]
+          },
+          "director": {
+            "type": "string",
+            "description": "The main director of the movie.",
+            "example": "Bob Persichetti"
+          }
+        }
+      },
       "CreateMovie": {
         "type": "object",
         "required": [
           "movieTitle",
           "description",
           "genres",
-          "runtime",
+          "runTime",
           "actors",
           "director"
         ],
@@ -382,9 +432,21 @@
     },
     "/movies": {
       "get": {
-        "summary": "Get all movies",
+        "summary": "Gets all movies in general or under a specific movie genre",
         "tags": [
           "Movies"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "genre",
+            "schema": {
+              "type": "string"
+            },
+            "required": false,
+            "description": "Filter movies by genre name.",
+            "example": "Thriller"
+          }
         ],
         "responses": {
           "200": {
@@ -416,9 +478,9 @@
         }
       },
       "post": {
-        "summary": "Create an movie",
+        "summary": "Create a movie",
         "tags": [
-          "movies"
+          "Movies"
         ],
         "requestBody": {
           "required": true,
@@ -429,11 +491,11 @@
               }
             }
           },
-          "description": "The request body properties needed to create an movie."
+          "description": "The request body properties needed to create a movie."
         },
         "responses": {
           "201": {
-            "description": "Created movie successfully",
+            "description": "Creating a movie successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -441,10 +503,10 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "movie created"
+                      "example": "Movie created successfully"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/Movies"
+                      "$ref": "#/components/schemas/CreateMovie"
                     }
                   }
                 }
@@ -452,7 +514,7 @@
             }
           },
           "400": {
-            "description": "Invalid input data",
+            "description": "Invalid input data when creating a movie.",
             "content": {
               "application/json": {
                 "schema": {
@@ -466,7 +528,7 @@
     },
     "/movies/{id}": {
       "get": {
-        "summary": "Get an movie by id",
+        "summary": "Gets a movie by id",
         "tags": [
           "Movies"
         ],
@@ -483,7 +545,7 @@
         ],
         "responses": {
           "200": {
-            "description": "An single movie.",
+            "description": "The JSON information of a single movie.",
             "content": {
               "application/json": {
                 "schema": {
@@ -491,7 +553,7 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "movie retrieved"
+                      "example": "Movie retrieved successfully"
                     },
                     "data": {
                       "$ref": "#/components/schemas/Movies"
@@ -502,7 +564,7 @@
             }
           },
           "404": {
-            "description": "movie not found",
+            "description": "Movie missing or not found.",
             "content": {
               "application/json": {
                 "schema": {
@@ -514,9 +576,9 @@
         }
       },
       "put": {
-        "summary": "Update an movie",
+        "summary": "Update a movie by id",
         "tags": [
-          "movies"
+          "Movies"
         ],
         "parameters": [
           {
@@ -538,11 +600,11 @@
               }
             }
           },
-          "description": "The request body properties needed to update an movie."
+          "description": "The request body properties needed to update a movie."
         },
         "responses": {
           "200": {
-            "description": "Updated movie successfully",
+            "description": "Updating a movie successfully.",
             "content": {
               "application/json": {
                 "schema": {
@@ -550,10 +612,10 @@
                   "properties": {
                     "message": {
                       "type": "string",
-                      "example": "movie updated"
+                      "example": "Movie updated successfully"
                     },
                     "data": {
-                      "$ref": "#/components/schemas/Movies"
+                      "$ref": "#/components/schemas/UpdateMovie"
                     }
                   }
                 }
@@ -583,9 +645,9 @@
         }
       },
       "delete": {
-        "summary": "Deletes a movie by id",
+        "summary": "Delete a movie by id",
         "tags": [
-          "movies"
+          "Movies"
         ],
         "parameters": [
           {
@@ -616,7 +678,7 @@
             }
           },
           "404": {
-            "description": "movie not found",
+            "description": "Movie missing or not found.",
             "content": {
               "application/json": {
                 "schema": {
@@ -632,7 +694,7 @@
       "get": {
         "summary": "Retrieve all ratings",
         "tags": [
-          "Ratings"
+          "Rating"
         ],
         "parameters": [],
         "responses": {

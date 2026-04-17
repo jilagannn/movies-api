@@ -5,7 +5,8 @@ dist/
 # root
 .env
 
-# testing
+# test
+coverage/
 sandbox.ts
 
 # logs
@@ -13,3 +14,6 @@ logs/
 
 # macOS
 .DS_STORE
+
+# vercel
+.vercel
