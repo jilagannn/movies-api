@@ -1,5 +1,4 @@
 import express from "express";
-// import { validateRequest } from "../middleware/validate";
 import * as ratingController from "../controllers/ratingController";
 
 const router = express.Router();
@@ -9,7 +8,7 @@ const router = express.Router();
  * /ratings:
  *   get:
  *     summary: Retrieve all ratings
- *     tags: [Ratings]
+ *     tags: [Rating]
  *     parameters: []
  *     responses:
  *       '200':

@@ -8,7 +8,7 @@ import healthRoutes from "../src/api/v1/routes/healthRoutes";
 import setupSwagger from "../config/swagger";
 import movieRoutes from "../src/api/v1/routes/movieRoutes";
 import genreRoutes from "../src/api/v1/routes/genreRoutes";
-import ratingRoutes from "../src/api/v1/routes/healthRoutes"
+import ratingRoutes from "../src/api/v1/routes/ratingRoutes"
 
 // start express
 const app: Express = express();
@@ -34,7 +34,7 @@ app.use("/api/v1/movies", movieRoutes);
 app.use("/api/v1/genres", genreRoutes);
 
 // Ratings
-app.use("/api/v1/ratings", ratingRoutes);
+app.use("api/v1/", ratingRoutes);
 
 setupSwagger(app);
 

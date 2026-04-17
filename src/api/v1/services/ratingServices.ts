@@ -87,7 +87,7 @@ export const createRating = async(ratingData: {
     createdAt?: string,
     updatedAt?: string
 }): Promise<Rating> => {
-    try{
+    try {
         const newRating: {
             movieTitle: string,
             rating: number,
@@ -123,8 +123,7 @@ export const updateRating = async (
         updatedAt?: string
     }): Promise<void> => {
 
-    // This try catch will only check if it exists, and if yes, perform update
-    try{
+    try {
 
         ratingData.updatedAt = new Date().toISOString();
         await firestoreRepository.updateDocument<Rating>(
