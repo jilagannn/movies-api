@@ -1,5 +1,7 @@
 import express from "express";
 import * as ratingController from "../controllers/ratingController";
+import { ratingSchemas } from "../validations/ratingSchemas";
+import { validateRequest } from "../middleware/validate";
 
 const router = express.Router();
 
@@ -65,6 +67,7 @@ router.get("/ratings",
  *         description: Rating not found
  */
 router.get("/ratings/searchID/:id", 
+    validateRequest(ratingSchemas.getRatingByID),
     ratingController.getRatingById
 )
 
@@ -96,7 +99,7 @@ router.get("/ratings/searchID/:id",
  *       '404':
  *         description: Rating not found
  */
-router.get("/ratings/searchTitle", 
+router.get("/ratings/searchTitle",
     ratingController.getRatingByTitle
 )
 
@@ -146,6 +149,7 @@ router.get("/ratings/searchTitle",
  *         description: "Failed to create Rating: Info"
  */
 router.post("/ratings",
+    validateRequest(ratingSchemas.create),
     ratingController.createRating
 )
 
@@ -180,6 +184,7 @@ router.post("/ratings",
  *         description: Rating not found
  */
 router.put("/ratings/:id",
+    validateRequest(ratingSchemas.update),
     ratingController.updateRating
 );
 
@@ -203,6 +208,7 @@ router.put("/ratings/:id",
  *         description: Rating not found
  */
 router.delete("/ratings/:id",
+    validateRequest(ratingSchemas.delete),
     ratingController.deleteRating
 );
 
