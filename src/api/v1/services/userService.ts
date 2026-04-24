@@ -44,9 +44,7 @@ export const getUserById = async(
 };
 
 export const createUser = async(userData: {
-    name: string,
-    role: string,
-    registeredAt: string
+    name: string
 }): Promise<User> => {
     try {
         const newUserData: {
@@ -54,7 +52,9 @@ export const createUser = async(userData: {
             role: string,
             registeredAt: string
         } = {
-            ...userData
+            ...userData,
+            role: "viewer",
+            registeredAt: new Date().toISOString()
         };
 
         const id: string = await firestoreRepo.createDocument<User>(COLLECTION, newUserData);
