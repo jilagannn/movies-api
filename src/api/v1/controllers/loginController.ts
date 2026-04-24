@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 import { errorResponse } from "../models/responseModel";
-import * as fs from 'fs';
 
 const SIGN_IN_URL: string = "https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=";
 
@@ -9,7 +8,7 @@ const SIGN_IN_URL: string = "https://identitytoolkit.googleapis.com/v1/accounts:
 // Posted by basarat, modified by community. See post 'Timeline' for change history
 // Retrieved 2026-03-10, License - CC BY-SA 4.0
 
-const API_KEY: string = fs.readFileSync("web-api-key.txt",'utf8');
+const API_KEY: string | undefined = process.env.FIREBASE_WEB_API_KEY
 
 
 export const login = async(
