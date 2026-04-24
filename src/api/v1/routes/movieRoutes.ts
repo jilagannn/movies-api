@@ -2,6 +2,8 @@ import express, { Router } from "express";
 import * as movieControllers from "../controllers/movieController";
 import { validateRequest } from "../middleware/validate";
 import { movieSchemas } from "../validations/movieValidation";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const router: Router = express.Router();
 
@@ -40,6 +42,7 @@ const router: Router = express.Router();
  */
 router.get(
     "/",
+    authenticate,
     movieControllers.getAllMovies
 );
 
@@ -78,6 +81,7 @@ router.get(
  */
 router.get(
     "/:id",
+    authenticate,
     validateRequest(movieSchemas.getMovieById),
     movieControllers.getMovieById
 );
@@ -117,6 +121,8 @@ router.get(
  */
 router.post(
     "/",
+    authenticate,
+    isAuthorized({ hasRole: ["admin"]}),
     validateRequest(movieSchemas.createMovie),
     movieControllers.createMovie
 );
@@ -169,6 +175,8 @@ router.post(
  */
 router.put(
     "/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin"]}),
     validateRequest(movieSchemas.updateMovie),
     movieControllers.updateMovie
 );
@@ -206,6 +214,8 @@ router.put(
  */
 router.delete(
     "/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin"]}),
     validateRequest(movieSchemas.deleteMovie),
     movieControllers.deleteMovie
 );
