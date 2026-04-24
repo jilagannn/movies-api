@@ -67,15 +67,6 @@ export const ratingSchemas = {
         })
     },
 
-    getRatingByTitle: {
-        query: Joi.object({
-            title: Joi.string().required().messages({
-                "any.required": "Rating title is required",
-                "string.empty": "Rating title cannot be empty",
-            })
-        })
-    },
-
     // PUT /posts/:id - Update post
     update: {
         params: Joi.object({

@@ -1,5 +1,9 @@
 import express from "express";
 import * as ratingController from "../controllers/ratingController";
+import { ratingSchemas } from "../validations/ratingSchemas";
+import { validateRequest } from "../middleware/validate";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const router = express.Router();
 
@@ -31,7 +35,9 @@ const router = express.Router();
  *       '404':
  *         description: "Failed to get all ratings"
  */
-router.get("/ratings", 
+router.get("/ratings",
+    authenticate,
+    isAuthorized({hasRole: ["viewers", "critic"]}),
     ratingController.getAllRatings
 )
 
@@ -64,7 +70,10 @@ router.get("/ratings",
  *       '404':
  *         description: Rating not found
  */
-router.get("/ratings/searchID/:id", 
+router.get("/ratings/searchID/:id",
+    authenticate,
+    isAuthorized({hasRole: ["viewers", "critic"]}),
+    validateRequest(ratingSchemas.getRatingByID),
     ratingController.getRatingById
 )
 
@@ -96,7 +105,9 @@ router.get("/ratings/searchID/:id",
  *       '404':
  *         description: Rating not found
  */
-router.get("/ratings/searchTitle", 
+router.get("/ratings/searchTitle",
+    authenticate,
+    isAuthorized({hasRole: ["viewers", "critic"]}),
     ratingController.getRatingByTitle
 )
 
@@ -146,6 +157,9 @@ router.get("/ratings/searchTitle",
  *         description: "Failed to create Rating: Info"
  */
 router.post("/ratings",
+    authenticate,
+    isAuthorized({hasRole: ["critic"], allowSameUser: true}),
+    validateRequest(ratingSchemas.create),
     ratingController.createRating
 )
 
@@ -180,6 +194,9 @@ router.post("/ratings",
  *         description: Rating not found
  */
 router.put("/ratings/:id",
+    authenticate,
+    isAuthorized({hasRole: ["critic"], allowSameUser: true}),
+    validateRequest(ratingSchemas.update),
     ratingController.updateRating
 );
 
@@ -203,6 +220,9 @@ router.put("/ratings/:id",
  *         description: Rating not found
  */
 router.delete("/ratings/:id",
+    authenticate,
+    isAuthorized({hasRole: ["critic"]}),
+    validateRequest(ratingSchemas.delete),
     ratingController.deleteRating
 );
 
