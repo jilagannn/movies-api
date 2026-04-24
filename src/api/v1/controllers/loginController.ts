@@ -12,7 +12,7 @@ const SIGN_IN_URL: string = "https://identitytoolkit.googleapis.com/v1/accounts:
 const API_KEY: string = fs.readFileSync("web-api-key.txt",'utf8');
 
 
-export const signIn = async(
+export const login = async(
     req: Request,
     res: Response,
     next: NextFunction
