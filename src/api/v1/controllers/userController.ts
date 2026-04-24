@@ -81,7 +81,7 @@ export const updateUser = async(
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { id } = req.params;
+        const { id } = res.locals.uid;
         const userId: string = (id as string);
         const { name } = req.body;
         const updatedUserData: Partial<Pick<User, "name" >> ={ name };
@@ -101,7 +101,7 @@ export const deleteUser = async(
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { id } = req.params;
+        const { id } = res.locals.uid;
         const userId: string = (id as string);
         
         await userServices.deleteUser(userId);
