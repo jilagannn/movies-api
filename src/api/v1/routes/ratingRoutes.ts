@@ -37,7 +37,7 @@ const router = express.Router();
  */
 router.get("/ratings",
     authenticate,
-    isAuthorized({hasRole: ["viewers", "critic"]}),
+    isAuthorized({hasRole: ["viewers", "critic"], allowSameUser: true}),
     ratingController.getAllRatings
 )
 
@@ -72,7 +72,7 @@ router.get("/ratings",
  */
 router.get("/ratings/searchID/:id",
     authenticate,
-    isAuthorized({hasRole: ["viewers", "critic"]}),
+    isAuthorized({hasRole: ["viewers", "critic"], allowSameUser: true}),
     validateRequest(ratingSchemas.getRatingByID),
     ratingController.getRatingById
 )
@@ -107,7 +107,7 @@ router.get("/ratings/searchID/:id",
  */
 router.get("/ratings/searchTitle",
     authenticate,
-    isAuthorized({hasRole: ["viewers", "critic"]}),
+    isAuthorized({hasRole: ["viewers", "critic"], allowSameUser: true}),
     ratingController.getRatingByTitle
 )
 

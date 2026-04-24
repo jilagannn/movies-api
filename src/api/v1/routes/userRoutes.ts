@@ -7,34 +7,43 @@ import * as userControllers from "../controllers/userController";
 const router: Router = express.Router();
 
 router.get(
+    "/myprofile",
+    authenticate,
+    userControllers.getUserById
+);
+
+router.get(
+    "/",
+    authenticate,
+    isAuthorized({ hasRole: ["admin"]}),
+    userControllers.getAllUsers
+);
+
+router.get(
     "/:id",
     authenticate,
     isAuthorized({ hasRole: ["admin"]}),
     getUserDetails
 );
 
-router.get(
-    "/",
-    userControllers.getAllUsers
-);
-
-router.get(
-    "/myprofile",
-    userControllers.getUserById
-);
-
 router.post(
     "/",
+    authenticate,
+    isAuthorized({ hasRole: ["admin"]}),
     userControllers.createUser
 );
 
 router.put(
     "/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin"]}),
     userControllers.updateUser
 );
 
 router.delete(
     "/:id",
+    authenticate,
+    isAuthorized({ hasRole: ["admin"]}),
     userControllers.deleteUser
 );
 
