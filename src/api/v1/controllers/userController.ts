@@ -61,12 +61,13 @@ export const createUser = async(
     next: NextFunction
 ): Promise<void> => {
     try {
-        const { name } = req.body;
+        const { name, uid } = req.body;
+        const userId = (uid as string)
         const userData: {
             name: string
         } = { name };
 
-        const newUser: User = await userServices.createUser(userData);
+        const newUser: User = await userServices.createUser(userData, userId);
         res.status(HTTP_STATUS.CREATED).json(
             successResponse(newUser, "User created successfully")
         );

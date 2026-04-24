@@ -45,7 +45,9 @@ export const getUserById = async(
 
 export const createUser = async(userData: {
     name: string
-}): Promise<User> => {
+    },
+    uid: string
+): Promise<User> => {
     try {
         const newUserData: {
             name: string,
@@ -57,7 +59,7 @@ export const createUser = async(userData: {
             registeredAt: new Date().toISOString()
         };
 
-        const id: string = await firestoreRepo.createDocument<User>(COLLECTION, newUserData);
+        const id: string = await firestoreRepo.createDocument<User>(COLLECTION, newUserData, uid);
         return { id, ...newUserData } as User;
     } catch (error) {
         throw error;
