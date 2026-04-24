@@ -2,6 +2,8 @@ import express from "express";
 import * as genreService from ".././controllers/genreController";
 import { genreSchema } from "../validations/genreSchema";
 import { validateRequest } from "../middleware/validate";
+import authenticate from "../middleware/authenticate";
+import isAuthorized from "../middleware/authorize";
 
 const router = express.Router();
 
@@ -93,14 +95,36 @@ const router = express.Router();
  *         description: Genre not found
  */
 
-router.post("/", validateRequest(genreSchema.create), genreService.createGenre);
+router.post(
+  "/",
+  validateRequest(genreSchema.create),
+  authenticate,
+  isAuthorized({ hasRole: ["admin"] }),
+  genreService.createGenre,
+);
 
 router.get("/", genreService.getAllGenres);
 
-router.get("/:id", validateRequest(genreSchema.getById), genreService.getGenreById);
+router.get(
+  "/:id",
+  validateRequest(genreSchema.getById),
+  genreService.getGenreById,
+);
 
-router.put("/:id",validateRequest(genreSchema.update), genreService.updateGenre);
+router.put(
+  "/:id",
+  validateRequest(genreSchema.update),
+  authenticate,
+  isAuthorized({ hasRole: ["admin"] }),
+  genreService.updateGenre,
+);
 
-router.delete("/:id",validateRequest(genreSchema.delete), genreService.deleteGenre);
+router.delete(
+  "/:id",
+  validateRequest(genreSchema.delete),
+  authenticate,
+  isAuthorized({ hasRole: ["admin"] }),
+  genreService.deleteGenre,
+);
 
 export default router;

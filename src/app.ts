@@ -3,18 +3,30 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-import morgan from "morgan";
+import { accessLogger, consoleLogger, errorLogger } from "./api/v1/middleware/logger";
 import healthRoutes from "../src/api/v1/routes/healthRoutes";
 import setupSwagger from "../config/swagger";
 import movieRoutes from "../src/api/v1/routes/movieRoutes";
 import genreRoutes from "../src/api/v1/routes/genreRoutes";
 import ratingRoutes from "../src/api/v1/routes/ratingRoutes"
+import adminRoutes from "../src/api/v1/routes/adminRoutes";
+import userRoutes from "../src/api/v1/routes/userRoutes";
+import loginRoutes from "../src/api/v1/routes/loginRoutes";
+import errorHandler from "../src/api/v1/middleware/errorHandler";
 
 // start express
 const app: Express = express();
 
-// configure Morgan
-app.use(morgan("combined"));
+// configure logging middleware
+if (process.env.NODE_ENV === "production") {
+    // log to files for production
+    app.use(accessLogger);
+    app.use(errorLogger);
+} else {
+    // log to console for immediate feedback in development
+    app.use(consoleLogger);
+}
+
 
 // middleware parsing for json responses
 app.use(express.json());
@@ -36,6 +48,19 @@ app.use("/api/v1/genres", genreRoutes);
 // Ratings
 app.use("/api/v1", ratingRoutes);
 
+// Login
+app.use("/api/v1", loginRoutes);
+
+// Users
+app.use("/api/v1/users", userRoutes);
+
+// Admin
+app.use("/api/v1/admin", adminRoutes);
+
+// swagger
 setupSwagger(app);
+
+//  error handler
+app.use(errorHandler);
 
 export default app;
