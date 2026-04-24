@@ -4,6 +4,6 @@
 export interface User {
     id: string,
     name: string,
-    role: number,
+    role: string,
     registeredAt: string,
 };
