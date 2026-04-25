@@ -22,7 +22,7 @@ To get this RESTful API backend up and running on your local machine, follow the
     First, open your terminal. Go to the folder where you want the project. Run this command:
 
     ```bash
-    git clone https://github.com/jilagannn/COMP-3018-M3-Assignment
+    git clone https://github.com/jilagannn/movies-api
     ```
 
 2. **Navigate to the project directory:**
@@ -30,7 +30,7 @@ To get this RESTful API backend up and running on your local machine, follow the
     Next, go into the project folder you just cloned:
 
     ```bash
-    cd COMP-3018-M3-Assignment
+    cd movies-api
     ```
 
 3. **Install dependencies:**
